@@ -43,21 +43,21 @@ namespace nicomiso
         /// </summary>
         private readonly RankingInfo[] rankinfo =
             {
-                new RankingInfo("all", "all"), new RankingInfo("g_ent", "総合_エンタ"), 
+                new RankingInfo("all", "all"), new RankingInfo("g_ent2", "総合_エンタ"), 
                 new RankingInfo("ent", "エンタメ"), new RankingInfo("music", "音楽"), 
-                new RankingInfo("sport", "スポーツ"), new RankingInfo("g_life", "総合_生活")
-                , new RankingInfo("animal", "動物"), new RankingInfo("cooking", "料理"), 
+                new RankingInfo("sport", "スポーツ"), new RankingInfo("g_life2", "総合_生活"),
+                new RankingInfo("animal", "動物"), new RankingInfo("cooking", "料理"), 
                 new RankingInfo("diary", "日記"), new RankingInfo("nature", "自然"), 
                 new RankingInfo("science", "科学"), new RankingInfo("history", "歴史"), 
                 new RankingInfo("radio", "ラジオ"), new RankingInfo("lecture", "動画講座"), 
-                new RankingInfo("politics", "政治"), 
-                new RankingInfo("g_try", "総合_やってみた"), 
+                new RankingInfo("g_politics", "政治"), 
+                new RankingInfo("g_tech", "総合_科学"), 
                 new RankingInfo("sing", "歌ってみた"), new RankingInfo("play", "演奏してみた"), 
                 new RankingInfo("dance", "踊ってみた"), new RankingInfo("draw", "描いてみた"), 
                 new RankingInfo("tech", "技術部"), 
-                new RankingInfo("g_culture", "総合_アニメ"), 
+                new RankingInfo("g_culture2", "総合_アニメ"), 
                 new RankingInfo("anime", "アニメ"), new RankingInfo("game", "ゲーム"), 
-                new RankingInfo("g_popular", "総合_殿堂入り"), 
+                new RankingInfo("g_other", "総合_その他"), 
                 new RankingInfo("imas", "アイマス"), new RankingInfo("toho", "東方"), 
                 new RankingInfo("vocaloid", "VOCALOID"), 
                 new RankingInfo("are", "例のアレ"), new RankingInfo("other", "その他")
