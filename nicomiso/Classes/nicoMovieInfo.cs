@@ -19,6 +19,11 @@ namespace nicomiso
     /// </summary>
     internal class NicoMovieInfo
     {
+        /// <summary>
+        /// The date.
+        /// </summary>
+        private DateTime date;
+
         #region Public Properties
 
         /// <summary>
@@ -29,7 +34,24 @@ namespace nicomiso
         /// <summary>
         /// Gets or sets the date.
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime Date 
+        {
+            get
+            {
+                return this.date;
+            }
+
+            set
+            {
+                this.date = value;
+                this.TimesAgo = this.TimeFromNow(this.date);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the times ago.
+        /// </summary>
+        public string TimesAgo { get; set; }
 
         /// <summary>
         /// Gets or sets the date_str.
@@ -173,6 +195,16 @@ namespace nicomiso
             }
         }
 
+        private string TimeFromNow(DateTime d)
+        {
+            var span = DateTime.Now.Subtract(d);
+            
+            if (span.Days < 1)
+            {
+                return span.Hours + " Hours";
+            }
+            return span.Days + " Days Ago";
+        }
         #endregion
     }
 

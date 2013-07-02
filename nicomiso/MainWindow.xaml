@@ -77,7 +77,7 @@
                                 <GridView x:Name="datagridRanking">
                                     <GridViewColumn Header="Title" Width="400" DisplayMemberBinding="{Binding Title}" />
                                     <GridViewColumn Header="thumb" Width="50" CellTemplate="{StaticResource template_pts}" />
-                                    <GridViewColumn Header="Date" Width="150" DisplayMemberBinding="{Binding DateStr}" />
+                                    <GridViewColumn Header="time" Width="150" DisplayMemberBinding="{Binding TimesAgo}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
