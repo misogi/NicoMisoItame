@@ -66,13 +66,13 @@ namespace nicomiso
         nicoMovieInfo[] srmvinfo;
         nicoMovieInfo[] _mvinfo_mylist;
         CookieChecker _login;
-        searchInfo[] srinfo = {
-                              new searchInfo {sortword = "新着コメント", sortquery = ""},
-                              new searchInfo {sortword = "再生数", sortquery = "v"},
-                              new searchInfo {sortword = "コメント数", sortquery = "r"},
-                              new searchInfo {sortword = "マイリスト数", sortquery = "m"},
-                              new searchInfo {sortword = "投稿日時(新しい)", sortquery = "f"},
-                              new searchInfo {sortword = "再生時間", sortquery = "l"}
+        SearchInfo[] srinfo = {
+                              new SearchInfo {sortword = "新着コメント", sortquery = ""},
+                              new SearchInfo {sortword = "再生数", sortquery = "v"},
+                              new SearchInfo {sortword = "コメント数", sortquery = "r"},
+                              new SearchInfo {sortword = "マイリスト数", sortquery = "m"},
+                              new SearchInfo {sortword = "投稿日時(新しい)", sortquery = "f"},
+                              new SearchInfo {sortword = "再生時間", sortquery = "l"}
                               };
 
         #region [ ---------------------------------------- 初期化処理 ------------------------------ ]
@@ -90,7 +90,7 @@ namespace nicomiso
             foreach( RankingInfo r in rankinfo){
                 listBox_RankCategory.Items.Add( r.name );
             }
-            foreach (searchInfo si in srinfo) {
+            foreach (SearchInfo si in srinfo) {
                 comboSearchSort.Items.Add( si.sortword );
             }
             srmvinfo = new nicoMovieInfo[100];

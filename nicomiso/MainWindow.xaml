@@ -13,7 +13,7 @@
         <DataTemplate x:Key="template_pts" >
             <TextBlock Text="{Binding pts}" HorizontalAlignment="Right"/>
         </DataTemplate>
-        <local:colConverter x:Key="myConverter" />
+        <local:ColConverter x:Key="myConverter" />
         <local:FontColConverter x:Key="myfontConverter" />
         <Style x:Key="myItemStyle" TargetType="{x:Type ListViewItem}">
             <Setter Property="Background">

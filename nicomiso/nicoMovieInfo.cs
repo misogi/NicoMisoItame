@@ -1,46 +1,130 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-using System.Text.RegularExpressions;
-using System.Xml;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.Windows.Data;
-using System.Windows.Media;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="nicoMovieInfo.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The nico movie info.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace nicomiso
 {
-    class nicoMovieInfo
+    using System;
+    using System.Globalization;
+    using System.Text.RegularExpressions;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Xml;
+
+    /// <summary>
+    /// The nico movie info.
+    /// </summary>
+    internal class nicoMovieInfo
     {
-        public string title { get; set; }
-        public string link { get; set; }
-        public string desc { get; set; }
-        public string date_str { get; set; }
-        public string info_str { get; set; }
-        public string view_str { get; set; }
-        public string resstr { get; set; }
-        public string myliststr { get; set; }
-        public string pts { get; set; }
-        public string tagstr { get; set; }
-        public string thambnail_url { get; set; }
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the com_num.
+        /// </summary>
+        public int com_num { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date.
+        /// </summary>
         public DateTime date { get; set; }
-        public int view_num {get; set;}
-        public int com_num {get; set;}
-        public int mylist_num {get; set;}
-        public BitmapImage thumbnail {get; set;}
+
+        /// <summary>
+        /// Gets or sets the date_str.
+        /// </summary>
+        public string date_str { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desc.
+        /// </summary>
+        public string desc { get; set; }
+
+        /// <summary>
+        /// Gets or sets the info_str.
+        /// </summary>
+        public string info_str { get; set; }
+
+        /// <summary>
+        /// Gets or sets the link.
+        /// </summary>
+        public string link { get; set; }
+
+        /// <summary>
+        /// Gets or sets the mylist_num.
+        /// </summary>
+        public int mylist_num { get; set; }
+
+        /// <summary>
+        /// Gets or sets the myliststr.
+        /// </summary>
+        public string myliststr { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pts.
+        /// </summary>
+        public string pts { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resstr.
+        /// </summary>
+        public string resstr { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tagstr.
+        /// </summary>
+        public string tagstr { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thambnail_url.
+        /// </summary>
+        public string thambnail_url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thumbnail.
+        /// </summary>
+        public BitmapImage thumbnail { get; set; }
+
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        public string title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the view_num.
+        /// </summary>
+        public int view_num { get; set; }
+
+        /// <summary>
+        /// Gets or sets the view_str.
+        /// </summary>
+        public string view_str { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// The get movie info detail.
+        /// </summary>
+        /// <param name="link">
+        /// The link.
+        /// </param>
         public void GetMovieInfoDetail(string link)
         {
-            Regex urlreg = new Regex("sm[0-9]+");
-            Match m = urlreg.Match( link );
-            tagstr = "";
+            var urlreg = new Regex("sm[0-9]+");
+            Match m = urlreg.Match(link);
+            this.tagstr = string.Empty;
             string str;
             if (m.Success)
             {
                 string urlstr = "http://ext.nicovideo.jp/api/getthumbinfo/" + m.Value;
-                XmlTextReader reader = new XmlTextReader(urlstr);
+                var reader = new XmlTextReader(urlstr);
                 reader.WhitespaceHandling = WhitespaceHandling.None;
                 while (reader.Read())
                 {
@@ -48,21 +132,22 @@ namespace nicomiso
                     {
                         continue;
                     }
+
                     if (reader.LocalName.Equals("view_counter"))
                     {
-                        view_num = int.Parse( reader.ReadString() );
+                        this.view_num = int.Parse(reader.ReadString());
                     }
                     else if (reader.LocalName.Equals("comment_num"))
                     {
-                        com_num = int.Parse( reader.ReadString() );
+                        this.com_num = int.Parse(reader.ReadString());
                     }
                     else if (reader.LocalName.Equals("mylist_counter"))
                     {
-                        mylist_num = int.Parse( reader.ReadString() );
+                        this.mylist_num = int.Parse(reader.ReadString());
                     }
                     else if (reader.LocalName.Equals("title"))
                     {
-                        title = reader.ReadString();
+                        this.title = reader.ReadString();
                     }
                     else if (reader.LocalName.Equals("link"))
                     {
@@ -70,7 +155,7 @@ namespace nicomiso
                     }
                     else if (reader.LocalName.Equals("tag"))
                     {
-                        tagstr = tagstr + " " + reader.ReadString();
+                        this.tagstr = this.tagstr + " " + reader.ReadString();
                     }
                     else if (reader.LocalName.Equals("strong"))
                     {
@@ -81,31 +166,72 @@ namespace nicomiso
                         str = reader.ReadString();
                         try
                         {
-                            date = DateTime.ParseExact(str, "yyyy-MM-ddTHH:mm:ssK", null);
-                        }catch(FormatException ){
+                            this.date = DateTime.ParseExact(str, "yyyy-MM-ddTHH:mm:ssK", null);
+                        }
+                        catch (FormatException)
+                        {
                             Console.WriteLine("パース失敗 : " + str);
                         }
                     }
-                    
                 }
             }
         }
 
+        #endregion
     }
-    class searchInfo
+
+    /// <summary>
+    /// The search info.
+    /// </summary>
+    internal class SearchInfo
     {
-        public string sortword { get; set; }
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the sortquery.
+        /// </summary>
         public string sortquery { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sortword.
+        /// </summary>
+        public string sortword { get; set; }
+
+        #endregion
     }
 
-    class colConverter : IValueConverter
+    /// <summary>
+    /// The col converter.
+    /// </summary>
+    internal class ColConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            ListViewItem item = (ListViewItem)value;
+        #region Public Methods and Operators
 
-            ListView listView = ItemsControl.ItemsControlFromItemContainer(item) as ListView;
-            nicoMovieInfo[] mvinfo = listView.ItemsSource as nicoMovieInfo[];
+        /// <summary>
+        /// The convert.
+        /// </summary>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        /// <param name="targetType">
+        /// The target type.
+        /// </param>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
+        /// <param name="culture">
+        /// The culture.
+        /// </param>
+        /// <returns>
+        /// The <see cref="object"/>.
+        /// </returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var item = (ListViewItem)value;
+
+            var listView = ItemsControl.ItemsControlFromItemContainer(item) as ListView;
+            var mvinfo = listView.ItemsSource as nicoMovieInfo[];
+
             // Get the index of a ListViewItem
             int index = listView.ItemContainerGenerator.IndexFromContainer(item);
 
@@ -136,19 +262,66 @@ namespace nicomiso
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        /// <summary>
+        /// The convert back.
+        /// </summary>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        /// <param name="targetType">
+        /// The target type.
+        /// </param>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
+        /// <param name="culture">
+        /// The culture.
+        /// </param>
+        /// <returns>
+        /// The <see cref="object"/>.
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
-    }
-    class FontColConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            ListViewItem item = (ListViewItem)value;
 
-            ListView listView = ItemsControl.ItemsControlFromItemContainer(item) as ListView;
-            nicoMovieInfo[] mvinfo = listView.ItemsSource as nicoMovieInfo[];
+        #endregion
+    }
+
+    /// <summary>
+    /// The font col converter.
+    /// </summary>
+    internal class FontColConverter : IValueConverter
+    {
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// The convert.
+        /// </summary>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        /// <param name="targetType">
+        /// The target type.
+        /// </param>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
+        /// <param name="culture">
+        /// The culture.
+        /// </param>
+        /// <returns>
+        /// The <see cref="object"/>.
+        /// </returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var item = (ListViewItem)value;
+
+            var listView = ItemsControl.ItemsControlFromItemContainer(item) as ListView;
+            var mvinfo = listView.ItemsSource as nicoMovieInfo[];
+
             // Get the index of a ListViewItem
             int index = listView.ItemContainerGenerator.IndexFromContainer(item);
 
@@ -179,9 +352,31 @@ namespace nicomiso
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        /// <summary>
+        /// The convert back.
+        /// </summary>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        /// <param name="targetType">
+        /// The target type.
+        /// </param>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
+        /// <param name="culture">
+        /// The culture.
+        /// </param>
+        /// <returns>
+        /// The <see cref="object"/>.
+        /// </returns>
+        /// <exception cref="NotImplementedException">
+        /// </exception>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }
