@@ -1,0 +1,144 @@
+﻿<Window x:Class="nicomiso.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:nicomiso" 
+        Title="ニコ味噌炒め" DataContext="{Binding}" Icon="/nicomiso;component/nicomiso.ico" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignWidth="659" SizeToContent="Manual" d:DesignHeight="460" Loaded="Window_Loaded" KeyDown="Window_KeyDown" Width="950" Height="900" SizeChanged="Window_SizeChanged">
+    <!-- リソース記述 -->
+    <Window.Resources>
+        
+        <BitmapImage UriSource="Resources\photo.png" x:Key="img_photo"></BitmapImage>
+        <DataTemplate x:Key="template_thumb">
+            <Image Width="65" Height="50" Source="{Binding thumbnail,IsAsync=True}" Stretch="Uniform"  Margin="0,0,0,0"></Image>
+        </DataTemplate>
+        <DataTemplate x:Key="template_pts" >
+            <TextBlock Text="{Binding pts}" HorizontalAlignment="Right"/>
+        </DataTemplate>
+        <local:colConverter x:Key="myConverter" />
+        <local:FontColConverter x:Key="myfontConverter" />
+        <Style x:Key="myItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <Binding RelativeSource="{RelativeSource Self}" 
+                    Converter="{StaticResource myConverter}"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <Binding RelativeSource="{RelativeSource Self}" 
+                    Converter="{StaticResource myfontConverter}"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </Window.Resources>
+    <!-- メニューやツールバー等の領域 -->
+    <DockPanel Name="dockPanel1" LastChildFill="True">
+        <Menu Height="23" Name="menu1" DockPanel.Dock="Top">
+            <MenuItem Header="ファイル(_F)" >
+                <MenuItem Header="開く" />
+            </MenuItem>
+            <MenuItem Header="表示(_V)">
+                <MenuItem Name="menuitem_Thumbnail" Header="サムネイルを表示" InputGestureText="Ctrl+I" IsCheckable="True" Click="MenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="ツール(_T)" />
+            <MenuItem Header="デバッグ(_D)">
+                <MenuItem Header="xmlファイル読み込み" InputGestureText="Ctrl+1" Click="MenuItem_ReadXML_Click" />
+                <MenuItem Header="SQLiteテスト" InputGestureText="Ctrl+2" Click="MenuItem_ReadSqlite_Click" />
+                <MenuItem Header="chromeでログイン" InputGestureText="Ctrl+3" Click="MenuItem_LoginChrome_Click" />
+            </MenuItem>
+        </Menu>
+        <ToolBar Grid.RowSpan="1" Height="26" HorizontalAlignment="Left" Name="toolBar1" DockPanel.Dock="Top" Width="Auto" Grid.Row="1" MinWidth="300" IsHitTestVisible="True">
+            <ToggleButton Name="toolBarItem_IsImageLoad" Click="toolBarItem_IsImageLoad_Click" IsChecked="False">
+                <Image Source="{StaticResource ResourceKey=img_photo}"></Image>
+            </ToggleButton>
+        </ToolBar>
+        <StatusBar Height="23"  Name="statusBar1" DockPanel.Dock="Bottom">
+
+            <StatusBarItem>
+                <TextBlock>Online</TextBlock>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <ProgressBar Height="16" Name="progressBar_LoadRanking" Width="100" />
+            </StatusBarItem>
+        </StatusBar>
+        <!-- ユーザー領域 -->
+        <Grid Margin="0,0,0,0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Name="Grid_Logbar" Height="24"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TabControl Grid.ColumnSpan="2"  Name="tabControl1" Margin="0,0,0,0" Grid.Row="0">
+                <TabItem Header="ランキング" Name="tabItem_Ranking">
+                    <Grid Grid.ColumnSpan="2" Grid.RowSpan="2">
+                        <ListBox Name="listBox_RankCategory" Width="99" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" SelectionChanged="listBox_RankCategory_SelectionChanged" />
+                        <ListView Height="Auto" HorizontalAlignment="Left" Margin="105,0,0,0" Name="listView_Ranking" VerticalAlignment="Top" MouseDoubleClick="listRanking_MouseDoubleClick" FontSize="12" FontFamily="Meiryo" ItemContainerStyle="{StaticResource myItemStyle}" IsEnabled="True">
+                            <ListView.View>
+                                <GridView x:Name="datagridRanking">
+                                    <GridViewColumn Header="Title" Width="400" DisplayMemberBinding="{Binding title}" />
+                                    <GridViewColumn Header="thumb" Width="50" CellTemplate="{StaticResource template_pts}" />
+                                    <GridViewColumn Header="Date" Width="150" DisplayMemberBinding="{Binding date_str}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="検索" Name="tabItem_Search" AllowDrop="False">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="928" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="検索" Height="56" Margin="537,9,0,0" Name="buttonSearch" Width="148" Click="buttonSearch_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" />
+                        <TextBox Height="24" Margin="1,11,0,0" Name="textSearchWord" VerticalAlignment="Top" KeyDown="textSearchWord_KeyDown" HorizontalAlignment="Left" Width="421" AcceptsReturn="False" IsManipulationEnabled="False" IsReadOnlyCaretVisible="False" Grid.ColumnSpan="2" />
+                        <ListView  Height="459" Margin="36,172,73,0" Name="listViewSearch" Width="819" SelectionChanged="listViewSearch_SelectionChanged" MouseDoubleClick="listViewSearch_MouseDoubleClick" GridViewColumnHeader.Click="listViewSearch_HeaderClick" Grid.Column="1">
+                            <ListView.View>
+                                <GridView >
+                                    <GridViewColumn Header="title" Width="500" DisplayMemberBinding="{Binding title}" />
+                                    <GridViewColumn Header="date" Width="150" DisplayMemberBinding="{Binding desc}" />
+                                    <GridViewColumn Header="view_num" Width="150" DisplayMemberBinding="{Binding view_num}"/>
+                                    <GridViewColumn Header="link" Width="200" DisplayMemberBinding="{Binding link}" />
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ComboBox Height="24" HorizontalAlignment="Left" Margin="388,12,0,0" Name="comboSearchSort" VerticalAlignment="Top" Width="96" IsEditable="False" Grid.Column="1" />
+                        <CheckBox Content="逆順" Height="16" HorizontalAlignment="Left" Margin="490,16,0,0" Name="checkSearchOrder" VerticalAlignment="Top" Grid.Column="1" />
+                        <TextBox Height="90" HorizontalAlignment="Left" Margin="1,637,0,0" Name="textBox_Searchmvinfo" VerticalAlignment="Top" Width="821" IsReadOnly="True" Grid.ColumnSpan="2" />
+                        <GroupBox Header="groupBox1" Height="103" HorizontalAlignment="Left" Margin="6,63,0,0" Name="groupBox_narrow" VerticalAlignment="Top" Width="416" IsEnabled="False" Grid.ColumnSpan="2">
+                            <Grid Width="416" Margin="0,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="242*" />
+                                    <ColumnDefinition Width="174*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Height="24" HorizontalAlignment="Left" Margin="6,6,0,0" Name="textBox1" VerticalAlignment="Top" Width="120" />
+                                <TextBox Height="24" HorizontalAlignment="Left" Margin="132,6,0,0" Name="textBox2" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+                                <Slider Height="23" HorizontalAlignment="Left" Margin="6,36,0,0" Name="slider1" VerticalAlignment="Top" Width="100" />
+                                <Slider Height="23" HorizontalAlignment="Left" Margin="132,36,0,0" Name="slider2" VerticalAlignment="Top" Width="100" />
+                            </Grid>
+
+                        </GroupBox>
+                        <CheckBox Content="条件で絞り込み(遅くなります)" Height="16" HorizontalAlignment="Left" Margin="7,49,0,0" Name="checkBox_narrow" VerticalAlignment="Top" Checked="checkBox_narrow_Checked" Unchecked="checkBox_narrow_Unchecked" Grid.ColumnSpan="2" />
+                    </Grid>
+                </TabItem>
+                <TabItem Header="マイリス" Name="tabItem_Mylist" AllowDrop="False">
+                    <Grid>
+                        <ComboBox Height="24" Name="comboBox_MylistGroup" Width="120" IsEditable="False" IsReadOnly="True" Margin="0,0,0,0" SelectionChanged="comboBox_MylistGroup_SelectionChanged" />
+                        <ListView Margin="36,422,73,0" Name="listView_Mylist" Width="819" >
+                            <ListView.View>
+                                <GridView >
+                                    <GridViewColumn Header="title" Width="500" DisplayMemberBinding="{Binding title}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <Expander Header="ログ出力" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="expander1" VerticalAlignment="Top" Width="Auto" IsExpanded="False" Grid.Row="1" Expanded="expander1_Expanded" ExpandDirection="Down" Collapsed="expander1_Collapsed">
+                <Grid Margin="0,0,0,0" Width="Auto" Height="Auto">
+                    <TextBox Height="Auto" Name="textBox_Log" Width="Auto" IsEnabled="True" IsReadOnly="True" VerticalScrollBarVisibility="Visible" MinHeight="90" MinWidth="600" Foreground="#FF959DD8" FontSize="12" FontFamily="MS Gothic" Focusable="False" HorizontalScrollBarVisibility="Hidden" />
+                </Grid>
+            </Expander>
+        </Grid>
+    </DockPanel>
+</Window>
