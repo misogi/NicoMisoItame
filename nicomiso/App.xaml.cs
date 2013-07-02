@@ -1,48 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="App.xaml.cs" company="">
+//   
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace nicomiso
 {
+    using System.Threading;
+    using System.Windows;
+
     /// <summary>
-    /// App.xaml の相互作用ロジック
+    ///     App.xaml の相互作用ロジック
     /// </summary>
     public partial class App : Application
     {
-        System.Threading.Mutex mutex;
+        #region Fields
+
+        /// <summary>
+        /// The mutex.
+        /// </summary>
+        private Mutex mutex;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The application_ exit.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            if (this.mutex != null)
+            {
+                /* Mutexを解放 */
+                this.mutex.ReleaseMutex();
+
+                /* Mutexを破棄 */
+                this.mutex.Close();
+            }
+        }
+
+        /// <summary>
+        /// The application_ startup.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             /* 名前を指定してMutexを生成 */
-            mutex = new System.Threading.Mutex(false, "misogi.nicomiso");
+            this.mutex = new Mutex(false, "misogi.nicomiso");
 
             /* 二重起動をチェック */
-            if (!mutex.WaitOne(0, false))
+            if (!this.mutex.WaitOne(0, false))
             {
                 /* 二重起動の場合はエラーを表示して終了 */
                 MessageBox.Show("すでに起動されています");
 
                 /* Mutexを破棄 */
-                mutex.Close();
-                mutex = null;
+                this.mutex.Close();
+                this.mutex = null;
 
                 /* 起動を中止してプログラムを終了 */
                 this.Shutdown();
             }
         }
 
-        private void Application_Exit(object sender, ExitEventArgs e)
-        {
-            if (mutex != null)
-            {
-                /* Mutexを解放 */
-                mutex.ReleaseMutex();
-
-                /* Mutexを破棄 */
-                mutex.Close();
-            }
-        }
+        #endregion
     }
 }

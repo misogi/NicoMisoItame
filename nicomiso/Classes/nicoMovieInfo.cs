@@ -195,6 +195,15 @@ namespace nicomiso
             }
         }
 
+        /// <summary>
+        /// The time from now.
+        /// </summary>
+        /// <param name="d">
+        /// The d.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
         private string TimeFromNow(DateTime d)
         {
             var span = DateTime.Now.Subtract(d);
