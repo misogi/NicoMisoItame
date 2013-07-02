@@ -8,10 +8,10 @@
         
         <BitmapImage UriSource="Resources\photo.png" x:Key="img_photo"></BitmapImage>
         <DataTemplate x:Key="template_thumb">
-            <Image Width="65" Height="50" Source="{Binding thumbnail,IsAsync=True}" Stretch="Uniform"  Margin="0,0,0,0"></Image>
+            <Image Width="65" Height="50" Source="{Binding Thumbnail,IsAsync=True}" Stretch="Uniform"  Margin="0,0,0,0"></Image>
         </DataTemplate>
         <DataTemplate x:Key="template_pts" >
-            <TextBlock Text="{Binding pts}" HorizontalAlignment="Right"/>
+            <TextBlock Text="{Binding Pts}" HorizontalAlignment="Right"/>
         </DataTemplate>
         <local:ColConverter x:Key="myConverter" />
         <local:FontColConverter x:Key="myfontConverter" />
@@ -75,9 +75,9 @@
                         <ListView Height="Auto" HorizontalAlignment="Left" Margin="105,0,0,0" Name="listView_Ranking" VerticalAlignment="Top" MouseDoubleClick="listRanking_MouseDoubleClick" FontSize="12" FontFamily="Meiryo" ItemContainerStyle="{StaticResource myItemStyle}" IsEnabled="True">
                             <ListView.View>
                                 <GridView x:Name="datagridRanking">
-                                    <GridViewColumn Header="Title" Width="400" DisplayMemberBinding="{Binding title}" />
+                                    <GridViewColumn Header="Title" Width="400" DisplayMemberBinding="{Binding Title}" />
                                     <GridViewColumn Header="thumb" Width="50" CellTemplate="{StaticResource template_pts}" />
-                                    <GridViewColumn Header="Date" Width="150" DisplayMemberBinding="{Binding date_str}" />
+                                    <GridViewColumn Header="Date" Width="150" DisplayMemberBinding="{Binding DateStr}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -94,10 +94,10 @@
                         <ListView  Height="459" Margin="36,172,73,0" Name="listViewSearch" Width="819" SelectionChanged="listViewSearch_SelectionChanged" MouseDoubleClick="listViewSearch_MouseDoubleClick" GridViewColumnHeader.Click="listViewSearch_HeaderClick" Grid.Column="1">
                             <ListView.View>
                                 <GridView >
-                                    <GridViewColumn Header="title" Width="500" DisplayMemberBinding="{Binding title}" />
-                                    <GridViewColumn Header="date" Width="150" DisplayMemberBinding="{Binding desc}" />
-                                    <GridViewColumn Header="view_num" Width="150" DisplayMemberBinding="{Binding view_num}"/>
-                                    <GridViewColumn Header="link" Width="200" DisplayMemberBinding="{Binding link}" />
+                                    <GridViewColumn Header="title" Width="500" DisplayMemberBinding="{Binding Title}" />
+                                    <GridViewColumn Header="date" Width="150" DisplayMemberBinding="{Binding Desc}" />
+                                    <GridViewColumn Header="view_num" Width="150" DisplayMemberBinding="{Binding ViewNum}"/>
+                                    <GridViewColumn Header="link" Width="200" DisplayMemberBinding="{Binding Link}" />
 
                                 </GridView>
                             </ListView.View>
@@ -127,7 +127,7 @@
                         <ListView Margin="36,422,73,0" Name="listView_Mylist" Width="819" >
                             <ListView.View>
                                 <GridView >
-                                    <GridViewColumn Header="title" Width="500" DisplayMemberBinding="{Binding title}" />
+                                    <GridViewColumn Header="title" Width="500" DisplayMemberBinding="{Binding Title}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>

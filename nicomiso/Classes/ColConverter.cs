@@ -41,7 +41,7 @@
             // Get the index of a ListViewItem
             int index = listView.ItemContainerGenerator.IndexFromContainer(item);
 
-            TimeSpan ts = DateTime.Now - mvinfo[index].date;
+            TimeSpan ts = DateTime.Now - mvinfo[index].Date;
             if (ts.TotalHours <= 24)
             {
                 return Brushes.LightCoral;

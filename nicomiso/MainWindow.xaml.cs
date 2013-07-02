@@ -223,7 +223,7 @@ namespace nicomiso
             {
                 _mvinfo_mylist[i] = new NicoMovieInfo();
                 Console.WriteLine("{0} : {1}", item.Element("title").Value, item.Element("pubDate").Value);
-                _mvinfo_mylist[i++].title = item.Element("title").Value;
+                _mvinfo_mylist[i++].Title = item.Element("title").Value;
             }
             listView_Mylist.ItemsSource = _mvinfo_mylist;
         }
@@ -258,7 +258,7 @@ namespace nicomiso
         /// <param name="e"></param>
         private void listRanking_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            string urlstr = rankinfo[listBox_RankCategory.SelectedIndex].mvinfo[listView_Ranking.SelectedIndex].link;
+            string urlstr = rankinfo[listBox_RankCategory.SelectedIndex].mvinfo[listView_Ranking.SelectedIndex].Link;
             try
             {
                 System.Diagnostics.Process.Start( urlstr );
@@ -273,7 +273,7 @@ namespace nicomiso
             Regex urlreg = new Regex("sm[0-9]+");
             int ind = listViewSearch.SelectedIndex;
             if( ind < 0 ){return;};
-            Match m = urlreg.Match( srmvinfo[ind].link );
+            Match m = urlreg.Match( srmvinfo[ind].Link );
             string urlstr;
             string infostr;
             System.Collections.Hashtable ha = new System.Collections.Hashtable();
@@ -332,17 +332,17 @@ namespace nicomiso
                 }
                 else if (reader.LocalName.Equals("title"))
                 {
-                    srmvinfo[i].title = reader.ReadString();
+                    srmvinfo[i].Title = reader.ReadString();
                 }
                 else if (reader.LocalName.Equals("link"))
                 {
-                    srmvinfo[i].link = reader.ReadString();
+                    srmvinfo[i].Link = reader.ReadString();
                     if ((bool)checkBox_narrow.IsChecked)
                     {
-                        srmvinfo[i].GetMovieInfoDetail(srmvinfo[i].link);
+                        srmvinfo[i].GetMovieInfoDetail(srmvinfo[i].Link);
                     }
                     else {
-                        srmvinfo[i].view_num = 0;
+                        srmvinfo[i].ViewNum = 0;
                     }
                 }
                 else if (reader.LocalName.Equals("pubDate"))
@@ -364,8 +364,8 @@ namespace nicomiso
                     htn = htdocs.DocumentNode.SelectNodes("//strong");
                     if (htn != null)
                     {
-                        srmvinfo[i].date = DateTime.ParseExact(htn[1].InnerText, "yyyy年MM月dd日 HH：mm：ss", null);
-                        srmvinfo[i].desc = srmvinfo[i].date.ToString("yyyy/MM/dd HH:mm:ss");
+                        srmvinfo[i].Date = DateTime.ParseExact(htn[1].InnerText, "yyyy年MM月dd日 HH：mm：ss", null);
+                        srmvinfo[i].Desc = srmvinfo[i].Date.ToString("yyyy/MM/dd HH:mm:ss");
                     }
                 }
             }
@@ -402,7 +402,7 @@ namespace nicomiso
 
         private void listViewSearch_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start( rankinfo[listBox_RankCategory.SelectedIndex].mvinfo[listViewSearch.SelectedIndex].link);
+            System.Diagnostics.Process.Start( rankinfo[listBox_RankCategory.SelectedIndex].mvinfo[listViewSearch.SelectedIndex].Link);
         }
 
         private void checkBox_narrow_Checked(object sender, RoutedEventArgs e)

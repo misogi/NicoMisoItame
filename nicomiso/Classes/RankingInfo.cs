@@ -27,7 +27,7 @@ namespace nicomiso
             for (i = 0; i < 100; i++)
             {
                 mvinfo[i] = new NicoMovieInfo();
-                mvinfo[i].thumbnail = new BitmapImage();
+                mvinfo[i].Thumbnail = new BitmapImage();
             }
         }
         /// <summary>
@@ -67,11 +67,11 @@ namespace nicomiso
                     }
                 }else if (reader.LocalName.Equals("title"))
                 {
-                    mvinfo[i].title = reader.ReadString();
+                    mvinfo[i].Title = reader.ReadString();
                 }
                 else if (reader.LocalName.Equals("link"))
                 {
-                    mvinfo[i].link = reader.ReadString();
+                    mvinfo[i].Link = reader.ReadString();
                 }
                 else if (reader.LocalName.Equals("pubDate"))
                 {
@@ -91,23 +91,23 @@ namespace nicomiso
                     htn = htdocs.DocumentNode.SelectNodes("//strong");
                     if (htn != null)
                     {
-                        mvinfo[i].pts = htn[0].InnerText;
-                        mvinfo[i].view_num = int.Parse(htn[4].InnerText, System.Globalization.NumberStyles.AllowThousands);
-                        mvinfo[i].view_str = "再生: " + htn[4].InnerText + "\nコメ: " + htn[5].InnerText + "\nマイ: " + htn[6].InnerText;
-                        mvinfo[i].date = DateTime.ParseExact( htn[2].InnerText , "yyyy年MM月dd日 HH：mm：ss" , null);
-                        mvinfo[i].date_str = mvinfo[i].date.ToString("yyyy/MM/dd HH:mm:ss");
-                        mvinfo[i].info_str = htn[0].InnerText + " Pts.\n" + htn[1].InnerText + "\n" + mvinfo[i].date_str;
+                        mvinfo[i].Pts = htn[0].InnerText;
+                        mvinfo[i].ViewNum = int.Parse(htn[4].InnerText, System.Globalization.NumberStyles.AllowThousands);
+                        mvinfo[i].ViewStr = "再生: " + htn[4].InnerText + "\nコメ: " + htn[5].InnerText + "\nマイ: " + htn[6].InnerText;
+                        mvinfo[i].Date = DateTime.ParseExact( htn[2].InnerText , "yyyy年MM月dd日 HH：mm：ss" , null);
+                        mvinfo[i].DateStr = mvinfo[i].Date.ToString("yyyy/MM/dd HH:mm:ss");
+                        mvinfo[i].InfoStr = htn[0].InnerText + " Pts.\n" + htn[1].InnerText + "\n" + mvinfo[i].DateStr;
                     }
                     htn = htdocs.DocumentNode.SelectNodes(@"//p//img");
                     if (htn != null)
                     {
                         str = htn[0].Attributes["src"].Value;
-                        mvinfo[i].thambnail_url = str;
+                        mvinfo[i].ThambnailUrl = str;
                         if (isimgload)
                         {
-                            mvinfo[i].thumbnail.BeginInit();
-                            mvinfo[i].thumbnail.UriSource = new Uri(str);
-                            mvinfo[i].thumbnail.EndInit();
+                            mvinfo[i].Thumbnail.BeginInit();
+                            mvinfo[i].Thumbnail.UriSource = new Uri(str);
+                            mvinfo[i].Thumbnail.EndInit();
                             //mvinfo[i].thumbnail.Freeze();
                         }
                     }
@@ -119,12 +119,12 @@ namespace nicomiso
         /// </summary>
         public void LoadImage() { 
             foreach(NicoMovieInfo m in mvinfo ){
-                if (m.thambnail_url != null && m.thumbnail.UriSource == null)
+                if (m.ThambnailUrl != null && m.Thumbnail.UriSource == null)
                 {
-                    m.thumbnail.BeginInit();
-                    m.thumbnail.CacheOption = BitmapCacheOption.OnLoad;
-                    m.thumbnail.UriSource = new Uri(m.thambnail_url);
-                    m.thumbnail.EndInit();
+                    m.Thumbnail.BeginInit();
+                    m.Thumbnail.CacheOption = BitmapCacheOption.OnLoad;
+                    m.Thumbnail.UriSource = new Uri(m.ThambnailUrl);
+                    m.Thumbnail.EndInit();
                 }
             }
         }
