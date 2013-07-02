@@ -63,8 +63,8 @@ namespace nicomiso
             new RankingInfo("other","その他")
         };
         string _logstr = "";
-        nicoMovieInfo[] srmvinfo;
-        nicoMovieInfo[] _mvinfo_mylist;
+        NicoMovieInfo[] srmvinfo;
+        NicoMovieInfo[] _mvinfo_mylist;
         CookieChecker _login;
         SearchInfo[] srinfo = {
                               new SearchInfo {sortword = "新着コメント", sortquery = ""},
@@ -93,9 +93,9 @@ namespace nicomiso
             foreach (SearchInfo si in srinfo) {
                 comboSearchSort.Items.Add( si.sortword );
             }
-            srmvinfo = new nicoMovieInfo[100];
+            srmvinfo = new NicoMovieInfo[100];
             for (int i = 0; i < 100; i++) {
-                srmvinfo[i] = new nicoMovieInfo();
+                srmvinfo[i] = new NicoMovieInfo();
             }
             comboSearchSort.SelectedIndex = 0;
             progressBar_LoadRanking.Minimum = 0;
@@ -218,10 +218,10 @@ namespace nicomiso
             var query = from p in xe.Descendants("item") select p;
             int i = 0;
             int count = query.Count();
-            _mvinfo_mylist = new nicoMovieInfo[count];
+            _mvinfo_mylist = new NicoMovieInfo[count];
             foreach (var item in query)
             {
-                _mvinfo_mylist[i] = new nicoMovieInfo();
+                _mvinfo_mylist[i] = new NicoMovieInfo();
                 Console.WriteLine("{0} : {1}", item.Element("title").Value, item.Element("pubDate").Value);
                 _mvinfo_mylist[i++].title = item.Element("title").Value;
             }

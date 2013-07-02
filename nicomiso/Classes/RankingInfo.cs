@@ -14,19 +14,19 @@ namespace nicomiso
     {
         public string name { get; set; }
         public string query { get; set; }
-        public nicoMovieInfo[] mvinfo { get; set; }
+        public NicoMovieInfo[] mvinfo { get; set; }
 
         public RankingInfo(string q, string n)
         {
             query = q;
             name = n;
-            mvinfo = new nicoMovieInfo[100];
+            mvinfo = new NicoMovieInfo[100];
             int i = 0;
             //System.Net.Cache.RequestCachePolicy _policy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
 
             for (i = 0; i < 100; i++)
             {
-                mvinfo[i] = new nicoMovieInfo();
+                mvinfo[i] = new NicoMovieInfo();
                 mvinfo[i].thumbnail = new BitmapImage();
             }
         }
@@ -118,7 +118,7 @@ namespace nicomiso
         /// 画像を読み込む。予めサムネイルが保存されてる必要あり
         /// </summary>
         public void LoadImage() { 
-            foreach(nicoMovieInfo m in mvinfo ){
+            foreach(NicoMovieInfo m in mvinfo ){
                 if (m.thambnail_url != null && m.thumbnail.UriSource == null)
                 {
                     m.thumbnail.BeginInit();

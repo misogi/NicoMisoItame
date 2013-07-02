@@ -7,9 +7,9 @@
     using System.Windows.Media;
 
     /// <summary>
-    /// The font col converter.
+    /// The col converter.
     /// </summary>
-    internal class FontColConverter : IValueConverter
+    internal class ColConverter : IValueConverter
     {
         #region Public Methods and Operators
 
@@ -44,27 +44,27 @@
             TimeSpan ts = DateTime.Now - mvinfo[index].date;
             if (ts.TotalHours <= 24)
             {
-                return Brushes.Red;
+                return Brushes.LightCoral;
             }
             else if (ts.TotalDays < 3)
             {
-                return Brushes.DarkRed;
+                return Brushes.LightSalmon;
             }
             else if (ts.TotalDays < 7)
             {
-                return Brushes.DarkRed;
+                return Brushes.Khaki;
             }
             else if (ts.TotalDays < 30)
             {
-                return Brushes.DarkGreen;
+                return Brushes.LightGreen;
             }
             else if (ts.TotalDays < 365)
             {
-                return Brushes.Gray;
+                return Brushes.White;
             }
             else
             {
-                return Brushes.Gray;
+                return Brushes.WhiteSmoke;
             }
         }
 
