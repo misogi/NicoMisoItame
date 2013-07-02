@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace nicomiso.Properties {
+namespace Nicomiso.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

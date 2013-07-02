@@ -1,4 +1,4 @@
-﻿namespace nicomiso
+﻿namespace Nicomiso
 {
     /// <summary>
     /// The search info.

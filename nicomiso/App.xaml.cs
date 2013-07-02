@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace nicomiso
+namespace Nicomiso
 {
     using System.Threading;
     using System.Windows;

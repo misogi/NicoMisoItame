@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace nicomiso
+namespace Nicomiso
 {
     using System;
     using System.Text.RegularExpressions;
@@ -142,8 +142,7 @@ namespace nicomiso
             if (m.Success)
             {
                 string urlstr = "http://ext.nicovideo.jp/api/getthumbinfo/" + m.Value;
-                var reader = new XmlTextReader(urlstr);
-                reader.WhitespaceHandling = WhitespaceHandling.None;
+                var reader = new XmlTextReader(urlstr) { WhitespaceHandling = WhitespaceHandling.None };
                 while (reader.Read())
                 {
                     if (!reader.IsStartElement())

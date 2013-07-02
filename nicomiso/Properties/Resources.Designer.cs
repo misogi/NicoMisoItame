@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace nicomiso.Properties {
+namespace Nicomiso.Properties {
     using System;
     
     

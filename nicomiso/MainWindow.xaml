@@ -1,7 +1,7 @@
-﻿<Window x:Class="nicomiso.MainWindow"
+﻿<Window x:Class="Nicomiso.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:nicomiso" 
+        xmlns:local="clr-namespace:Nicomiso" 
         Title="ニコ味噌炒め" DataContext="{Binding}" Icon="/nicomiso;component/nicomiso.ico" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignWidth="659" SizeToContent="Manual" d:DesignHeight="460" Loaded="Window_Loaded" KeyDown="Window_KeyDown" Width="950" Height="900" SizeChanged="Window_SizeChanged">
     <!-- リソース記述 -->
     <Window.Resources>

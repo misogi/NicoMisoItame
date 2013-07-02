@@ -1,4 +1,4 @@
-﻿namespace nicomiso
+﻿namespace Nicomiso
 {
     using System;
     using System.Globalization;
